@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="fragments/head :: head('Admin Cars')"></th:block>
+<body>
+<th:block th:replace="fragments/header :: header"></th:block>
+
+<div class="page">
+    <h2>Керування автомобілями</h2>
+
+    <form class="form cardform" th:action="@{/admin/cars/add}" th:object="${car}" method="post">
+        <div class="row2">
+            <div>
+                <label>Make</label>
+                <input th:field="*{make}">
+                <div class="field-error" th:errors="*{make}"></div>
+            </div>
+            <div>
+                <label>Model</label>
+                <input th:field="*{model}">
+                <div class="field-error" th:errors="*{model}"></div>
+            </div>
+        </div>
+        <div class="row2">
+            <div>
+                <label>Year</label>
+                <input th:field="*{year}">
+                <div class="field-error" th:errors="*{year}"></div>
+            </div>
+            <div>
+                <label>Price/day</label>
+                <input th:field="*{pricePerDay}">
+                <div class="field-error" th:errors="*{pricePerDay}"></div>
+            </div>
+        </div>
+        <div class="row2">
+            <input th:field="*{category}" placeholder="Category (Economy/Comfort/SUV/Popular)">
+            <input th:field="*{imageUrl}" placeholder="Image URL (optional)">
+        </div>
+        <input th:field="*{description}" placeholder="Description">
+        <button class="btn primary">Додати</button>
+    </form>
+
+    <div class="table">
+        <div class="tr th">
+            <div>Автомобіль</div><div>Рік</div><div>Ціна</div><div>Доступність</div><div>Дії</div>
+        </div>
+
+        <div class="tr" th:each="c : ${cars}">
+            <div th:text="${c.make} + ' ' + ${c.model}"></div>
+            <div th:text="${c.year}"></div>
+            <div th:text="${c.pricePerDay}"></div>
+            <div>
+                <span class="badge ok" th:if="${c.available}">Доступне</span>
+                <span class="badge bad" th:if="${!c.available}">Недоступне</span>
+            </div>
+            <div class="row-actions">
+                <form th:action="@{/admin/cars/{id}/toggle(id=${c.id})}" method="post">
+                    <button class="btn ghost">Toggle</button>
+                </form>
+                <form th:action="@{/admin/cars/{id}/delete(id=${c.id})}" method="post">
+                    <button class="btn danger">Видалити</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="fragments/head :: head('Каталог')"></th:block>
+<body>
+<th:block th:replace="fragments/header :: header"></th:block>
+
+<div class="page">
+    <div class="page-title">
+        <h2>Каталог автомобілів</h2>
+        <div class="pill light" th:text="${#lists.size(cars)} + ' позицій у каталозі'">0 позицій</div>
+    </div>
+
+    <div class="layout">
+        <!-- LEFT FILTERS -->
+        <aside class="sidebar">
+            <h3>Швидкі фільтри</h3>
+            <div class="chips">
+                <a class="chip" th:href="@{/catalog(category='Economy')}">Економ</a>
+                <a class="chip" th:href="@{/catalog(category='Comfort')}">Комфорт</a>
+                <a class="chip" th:href="@{/catalog(category='SUV')}">SUV</a>
+                <a class="chip" th:href="@{/catalog(category='Popular')}">Найпопулярніші</a>
+            </div>
+
+            <h3>Пошук по каталогу</h3>
+            <form class="filter" method="get" action="/catalog" th:object="${s}">
+                <input th:field="*{q}" placeholder="Напр., Corolla, BMW, 2023...">
+
+                <div class="row2">
+                    <input th:field="*{yearFrom}" placeholder="Від року">
+                    <input th:field="*{yearTo}" placeholder="До року">
+                </div>
+
+                <input th:field="*{budget}" placeholder="Бюджет (грн/доба)">
+
+                <select th:field="*{available}">
+                    <option th:value="${null}">Доступність: всі</option>
+                    <option th:value="true">Лише доступні</option>
+                    <option th:value="false">Лише недоступні</option>
+                </select>
+
+                <select th:field="*{category}">
+                    <option value="">Категорія: всі</option>
+                    <option value="Economy">Economy</option>
+                    <option value="Comfort">Comfort</option>
+                    <option value="SUV">SUV</option>
+                    <option value="Popular">Popular</option>
+                </select>
+
+                <div class="row2">
+                    <button class="btn primary">Застосувати</button>
+                    <a class="btn ghost" href="/catalog">Скинути</a>
+                </div>
+            </form>
+        </aside>
+
+        <!-- GRID -->
+        <main class="grid">
+            <div class="card" th:each="c : ${cars}">
+                <div class="card-img"></div>
+                <div class="card-body">
+                    <div class="card-title">
+                        <b th:text="${c.make} + ' ' + ${c.model}">Toyota Corolla</b>
+                        <span class="badge ok" th:if="${c.available}">Доступне</span>
+                        <span class="badge bad" th:if="${!c.available}">Недоступне</span>
+                    </div>
+
+                    <div class="tags">
+                        <span class="tag" th:text="${c.year}">2023</span>
+                        <span class="tag" th:text="${c.category}">Comfort</span>
+                    </div>
+
+                    <div class="price">
+                        <span class="big" th:text="${#numbers.formatDecimal(c.pricePerDay,1,'POINT',0,'NONE')} + ' грн'">1200 грн</span>
+                        <span class="muted">/ доба</span>
+                    </div>
+
+                    <div class="actions">
+                        <a class="btn primary" th:href="@{/booking/{id}(id=${c.id})}">Забронювати</a>
+                        <a class="btn ghost" th:href="@{/cars/{id}(id=${c.id})}">Деталі</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+</body>
+</html>

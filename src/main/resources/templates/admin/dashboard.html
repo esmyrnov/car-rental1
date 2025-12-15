@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="fragments/head :: head('Admin')"></th:block>
+<body>
+<th:block th:replace="fragments/header :: header"></th:block>
+
+<div class="page">
+    <h2>Адміністративна панель</h2>
+
+    <div class="stats">
+        <div class="stat">
+            <div class="num" th:text="${carsCount}">0</div>
+            <div class="lbl">Автомобілів у каталозі</div>
+        </div>
+        <div class="stat">
+            <div class="num" th:text="${activeBookingsCount}">0</div>
+            <div class="lbl">Активних бронювань</div>
+        </div>
+        <div class="stat">
+            <div class="num" th:text="${usersCount}">0</div>
+            <div class="lbl">Зареєстрованих користувачів</div>
+        </div>
+    </div>
+
+    <div class="admin-links">
+        <a class="btn primary" href="/admin/cars">Автомобілі</a>
+        <a class="btn primary" href="/admin/bookings">Бронювання</a>
+        <a class="btn primary" href="/admin/users">Користувачі</a>
+    </div>
+</div>
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+</body>
+</html>

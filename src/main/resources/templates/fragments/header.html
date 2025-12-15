@@ -1,0 +1,46 @@
+<header th:fragment="header"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">CarRental</div>
+      <div class="pill">Spring MVC • Thymeleaf UI</div>
+    </div>
+
+    <nav class="nav">
+      <a th:href="@{/catalog}">Каталог</a>
+      <a href="#">Популярне</a>
+      <a href="#">Як це працює</a>
+      <a href="#">Контакти</a>
+    </nav>
+
+    <!-- ❌ ГОСТЬ -->
+    <div class="auth" sec:authorize="isAnonymous()">
+      <a class="btn ghost" th:href="@{/auth/login}">Вхід</a>
+      <a class="btn primary" th:href="@{/auth/register}">Реєстрація</a>
+    </div>
+
+    <!-- ✅ ЗАЛОГІНЕНИЙ -->
+    <div class="auth" sec:authorize="isAuthenticated()">
+
+      <a class="btn ghost" th:href="@{/profile}">
+        Мій кабінет
+      </a>
+
+      <!-- 👑 ТІЛЬКИ ДЛЯ ADMIN -->
+      <a class="btn ghost"
+         sec:authorize="hasAuthority('ROLE_ADMIN')"
+         th:href="@{/admin/dashboard}">
+        Адмін
+      </a>
+
+      <form th:action="@{/auth/logout}" method="post" style="display:inline">
+        <button type="submit" class="btn danger">
+          Вийти
+        </button>
+      </form>
+
+    </div>
+  </div>
+</header>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="fragments/head :: head('Профіль')"></th:block>
+<body>
+<th:block th:replace="fragments/header :: header"></th:block>
+
+<div class="page">
+  <div class="page-title">
+    <h2>Мій кабінет</h2>
+    <a class="btn ghost" href="/auth/logout">Вийти</a>
+  </div>
+
+  <h3>Мої бронювання</h3>
+
+  <div class="table">
+    <div class="tr th">
+      <div>Авто</div><div>Період</div><div>Статус</div><div>Дія</div>
+    </div>
+
+    <div class="tr" th:each="b : ${bookings}">
+      <div th:text="${b.car.make} + ' ' + ${b.car.model}"></div>
+      <div th:text="${b.startDate} + ' → ' + ${b.endDate}"></div>
+      <div>
+        <span class="badge ok" th:if="${b.active}">Активне</span>
+        <span class="badge bad" th:if="${!b.active}">Скасовано</span>
+      </div>
+      <div>
+        <form th:if="${b.active}" th:action="@{/bookings/{id}/cancel(id=${b.id})}" method="post">
+          <button class="btn danger">Скасувати</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+</body>
+</html>

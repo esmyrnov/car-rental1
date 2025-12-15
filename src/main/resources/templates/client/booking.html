@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="fragments/head :: head('Бронювання')"></th:block>
+<body>
+<th:block th:replace="fragments/header :: header"></th:block>
+
+<div class="page">
+  <h2>Бронювання автомобіля</h2>
+
+  <div class="booking-layout">
+    <div class="booking-left">
+      <h3>Дані для бронювання</h3>
+
+      <div class="error" th:if="${error}" th:text="${error}"></div>
+
+      <form th:action="@{/booking/{id}(id=${car.id})}" th:object="${form}" method="post" class="form">
+        <div class="row2">
+          <div>
+            <label>Дата початку оренди</label>
+            <input type="date" th:field="*{startDate}">
+            <div class="field-error" th:errors="*{startDate}"></div>
+          </div>
+          <div>
+            <label>Дата завершення оренди</label>
+            <input type="date" th:field="*{endDate}">
+            <div class="field-error" th:errors="*{endDate}"></div>
+          </div>
+        </div>
+
+        <button class="btn primary full">Підтвердити бронювання</button>
+      </form>
+    </div>
+
+    <div class="booking-right">
+      <h3>Обраний автомобіль</h3>
+      <b th:text="${car.make} + ' ' + ${car.model}"></b>
+
+      <div class="tags">
+        <span class="tag" th:text="${car.year}"></span>
+        <span class="tag" th:text="${car.category}"></span>
+      </div>
+
+      <div class="price bigline">
+        <span class="big" th:text="${#numbers.formatDecimal(car.pricePerDay,1,'POINT',0,'NONE')} + ' грн / доба'"></span>
+        <p class="muted">Остаточна вартість розраховується автоматично на основі обраного періоду оренди.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+</body>
+</html>

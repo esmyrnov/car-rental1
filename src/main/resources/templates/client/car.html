@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="fragments/head :: head('Деталі авто')"></th:block>
+<body>
+<th:block th:replace="fragments/header :: header"></th:block>
+
+<div class="page">
+    <div class="details">
+        <h1 th:text="${car.make} + ' ' + ${car.model}">Toyota Corolla</h1>
+        <p class="muted" th:text="${car.description}"></p>
+
+        <div class="tags">
+            <span class="tag" th:text="${car.year}"></span>
+            <span class="tag" th:text="${car.category}"></span>
+            <span class="tag" th:text="${car.available ? 'Доступне' : 'Недоступне'}"></span>
+        </div>
+
+        <div class="price bigline">
+            <span class="big" th:text="${#numbers.formatDecimal(car.pricePerDay,1,'POINT',0,'NONE')} + ' грн / доба'"></span>
+            <a class="btn primary" th:href="@{/booking/{id}(id=${car.id})}">Перейти до бронювання</a>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+</body>
+</html>

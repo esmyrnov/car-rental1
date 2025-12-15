@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{fragments/head :: head('Редагування авто')}"/>
+
+<body>
+<th:block th:replace="~{fragments/header :: header}"/>
+
+<h2>Редагувати автомобіль</h2>
+
+<form th:action="@{'/admin/cars/' + ${car.id} + '/edit'}"
+      th:object="${car}"
+      method="post">
+
+  <input th:field="*{make}" placeholder="Марка"/>
+  <span th:errors="*{make}"></span>
+
+  <input th:field="*{model}" placeholder="Модель"/>
+  <span th:errors="*{model}"></span>
+
+  <input type="number" th:field="*{year}" placeholder="Рік"/>
+  <span th:errors="*{year}"></span>
+
+  <input type="number" th:field="*{pricePerDay}" placeholder="Ціна / день"/>
+  <span th:errors="*{pricePerDay}"></span>
+
+  <button type="submit">Зберегти</button>
+</form>
+
+<th:block th:replace="~{fragments/footer :: footer}"/>
+</body>
+</html>

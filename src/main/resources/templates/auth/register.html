@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="fragments/head :: head('Реєстрація')"></th:block>
+<body>
+<th:block th:replace="fragments/header :: header"></th:block>
+
+<div class="auth-card">
+  <h1>Реєстрація</h1>
+
+  <form class="form" th:action="@{/auth/register}" th:object="${form}" method="post">
+    <input th:field="*{fullName}" placeholder="Імʼя та прізвище">
+    <div class="field-error" th:errors="*{fullName}"></div>
+
+    <input th:field="*{phone}" placeholder="Номер телефону">
+    <div class="field-error" th:errors="*{phone}"></div>
+
+    <input th:field="*{email}" placeholder="Email">
+    <div class="field-error" th:errors="*{email}"></div>
+
+    <input type="password" th:field="*{password}" placeholder="Пароль">
+    <div class="field-error" th:errors="*{password}"></div>
+
+    <button class="btn primary full">Створити акаунт</button>
+  </form>
+
+  <div class="muted">
+    Вже є акаунт? <a href="/auth/login">Вхід</a>
+  </div>
+</div>
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+</body>
+</html>
