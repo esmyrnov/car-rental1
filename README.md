@@ -26,14 +26,7 @@ cd car-rental
 👤 Тестові користувачі
 Адміністратор
 
-email: admin@admin.com
+email: admin@local.com
 
-password: admin123
+password: password
 
-Користувач
-
-email: user@test.com
-
-password: user123
-
-(створюються автоматично при першому запуску)
