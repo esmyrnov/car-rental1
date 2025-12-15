@@ -23,6 +23,14 @@
 ```bash
 git clone https://github.com/USERNAME/car-rental.git
 cd car-rental
+
+CREATE DATABASE car_rental;
+Налаштувати підключення
+src/main/resources/application.properties
+
+spring.datasource.username=YOUR_USERNAME
+spring.datasource.password=YOUR_PASSWORD
+
 👤 Тестові користувачі
 Адміністратор
 
